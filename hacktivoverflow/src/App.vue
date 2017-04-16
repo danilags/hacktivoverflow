@@ -1,13 +1,30 @@
 <template>
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->
+    <nav-tab :statusLogin="statusLogin"></nav-tab>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+import NavTab from './components/NavTab'
+
 export default {
-  name: 'app'
+  data() {
+    return {
+      statusLogin: false
+    }
+  },
+  components: {
+    NavTab
+  },
+  mounted() {
+    if (window.localStorage.getItem('token')) {
+      this.statusLogin = true
+    } else {
+      this.statusLogin = false
+    }
+  }
 }
 </script>
 
@@ -18,6 +35,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 3px;
 }
 </style>

@@ -1,10 +1,9 @@
 var express = require('express');
 var router = express.Router();
+var contUser = require('../controllers/user');
 
 
-router.get('/', function(req, res) {
-  res.send('Connected!')
-})
+router.post('/login', contUser.loginUser)
 
 
 module.exports = router;

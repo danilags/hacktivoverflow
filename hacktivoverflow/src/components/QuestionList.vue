@@ -3,7 +3,7 @@
     <h1>{{ msg }}</h1>
     <el-row>
       <el-col :span="12"><div class="grid-content bg-purple-dark">
-        <h3>Daniel Agus</h3>
+        <h3>Top Questions</h3>
       </div>
     </el-col>
     </el-row>
