@@ -6,14 +6,20 @@
         <h3>Top Questions</h3>
       </div>
     </el-col>
+    <el-col :span="12"><div class="grid-content bg-purple-dark">
+      <router-link to="/questions/ask"><el-button type="primary" v-if="statusLogin == true">Ask Question</el-button></router-link>
+    </div>
+  </el-col>
     </el-row>
     <el-row>
       <el-col :span="24">
         <el-card class="box-card" v-for="question in questions" :key="question._id">
               <el-row>
-                <el-col :span="18">
-                  <a href="#"><p>{{ question.content }}</p></a>
-                </el-col>
+                <router-link :to="'/questions/'+question._id">
+                  <el-col :span="18">
+                    <p>{{ question.content }}</p>
+                  </el-col>
+                </router-link>
                 <el-col :span="3">
                   <p>Votes : {{question.votes}}</p>
                 </el-col>
@@ -38,7 +44,8 @@ export default {
   data () {
     return {
       msg: 'Welcome to Hacktivoverflow',
-      questions: []
+      questions: [],
+      statusLogin : false
     }
   },
   methods: {
@@ -58,6 +65,11 @@ export default {
   },
   mounted() {
     this.getQuestion()
+    if (window.localStorage.getItem('token')) {
+      this.statusLogin = true
+    } else {
+      this.statusLogin = false
+    }
   }
 }
 </script>
