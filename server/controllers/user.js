@@ -1,5 +1,7 @@
 const db = require('../models/user');
-// const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
+const pwh = require('password-hash');
+require('dotenv').config()
 
 let getAll = function(req, res) {
   let populateQuery = [{path: 'question', select:['content','userid']}, {path: 'answer', select: ['content','userid']}]
@@ -11,24 +13,20 @@ let getAll = function(req, res) {
 }
 
 let createUser = function(req, res) {
-  db.findOne(function(err, data) {
-    if (err) {
-      res.send("Data Error !")
+  let newUser = new db({
+    username : req.body.username,
+    email    : req.body.email,
+    password : pwh.generate(req.body.password),
+    question : [],
+    answer   : []
+  })
+
+  newUser.save(function(err, data) {
+    if (!err) {
+      let newToken = jwt.sign({username: data.username}, process.env.SECRET_WORD)
+      res.send({success: true, msg:'User success created', token: newToken, id: data._id})
     } else {
-      let newUser = new db({
-        username : req.body.username,
-        email    : req.body.email,
-        password : req.body.password,
-        question : [],
-        answer   : []
-      })
-      newUser.save(function(err, data) {
-        if (err) {
-          res.send(err)
-        } else {
-          res.send("User success created !")
-        }
-      })
+      res.send({success: false, msg: err})
     }
   })
 }
@@ -59,6 +57,16 @@ let updateAnswer = function(req, res) {
       }
     }
   )
+}
+
+let loginUser = function(req, res) {
+  db.findOne({'username' : req.body.username}, function(err, user) {
+    if (err || user == null) {
+      res.send({success: false, msg: 'username not found !'})
+    } else {
+      
+    }
+  })
 }
 
 
