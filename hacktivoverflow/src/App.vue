@@ -2,7 +2,7 @@
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->
     <nav-tab :statusLogin="statusLogin"></nav-tab>
-    <router-view></router-view>
+    <router-view :statusLogin="statusLogin"></router-view>
   </div>
 </template>
 

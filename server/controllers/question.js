@@ -1,4 +1,6 @@
 const db = require('../models/question');
+const answer = require('../models/answer');
+
 // const jwt = require('jsonwebtoken');
 
 let getAll = function(req, res) {
@@ -58,6 +60,26 @@ let deleteQuestion = function(req, res) {
     })
 }
 
+let oneQuestion = function(req, res) {
+  let populateQuery = [{path: 'userid', select:['username','email']}, {path: 'answerid', select: ['content','userid']}, {path: 'answerid.userid', select: ['username']}]
+  db.findOne({_id: req.params.id})
+    .populate(populateQuery)
+    .exec(function(err, result) {
+      if (!err) {
+        res.send({success: true, msg: "Success", data: result})
+      } else{
+        res.send({success: false, msg: "Gagal get data",  data:null})
+      }
+    })
+}
+
+// function(err, result) {
+//   if (!err) {
+//     res.send({success: true, msg: "Success", data: result})
+//   } else{
+//     res.send({success: false, msg: "Gagal get data",  data:null})
+//   }
+// }
 // kode cadangan
 // db.findById(req.params.id, function(err, question) {
 //   if (err) {
@@ -78,5 +100,6 @@ module.exports = {
   getAll,
   createQuestion,
   updateAnswerId,
-  deleteQuestion
+  deleteQuestion,
+  oneQuestion
 }

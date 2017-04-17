@@ -1,4 +1,6 @@
 const db = require('../models/answer');
+const question = require('../models/question');
+const user = require('../models/user');
 // const jwt = require('jsonwebtoken');
 
 let getAll = function(req, res) {
@@ -18,10 +20,29 @@ let createAnswer = function(req, res) {
     upvote      : [],
     downvote    : []
   }, function(err, data) {
+    console.log(data);
     if (err) {
       res.send(err)
     } else {
-      res.send("Answer success created !")
+      user.findByIdAndUpdate(data.userid,
+      {$push : {"answer" : data._id}},
+      {safe: true, upsert: true, new: true},
+        function(err, result) {
+          if (!err) {
+            question.findByIdAndUpdate(data.questionid,
+              {$push : {"answerid" : data._id}},
+              {safe: true, upsert: true, new: true},
+                function(err, success) {
+                  if (err) {
+                    res.send(err)
+                  } else {
+                    res.send(success)
+                  }
+                }
+            )
+          }
+        }
+      )
     }
   })
 }
