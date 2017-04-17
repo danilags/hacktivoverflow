@@ -66,12 +66,25 @@ let loginUser = function(req, res) {
     } else {
       if (pwh.verify(req.body.password,user.password)) {
         let newToken = jwt.sign({username: user.username}, process.env.SECRET_WORD)
-        res.send({success: true, msg: 'Your Login success !', token: newToken, id: user._id})
+        res.send({success: true, msg: 'Your Login success !', token: newToken, id: user._id, username: user.username})
       } else {
         res.send({success: false, msg: 'Username or Password is wrong'})
       }
     }
   })
+}
+
+let userFindOne = function(req, res) {
+
+  db.findOne({_id: req.params.id})
+    .populate('answer')
+    .exec(function(err, data) {
+      if (err) {
+        res.send(err)
+      } else {
+        res.send(data)
+      }
+    })
 }
 
 
@@ -80,5 +93,6 @@ module.exports = {
   createUser,
   updateQuestion,
   updateAnswer,
-  loginUser
+  loginUser,
+  userFindOne
 }

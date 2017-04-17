@@ -1,12 +1,14 @@
 <template lang="html">
-  <div class="animated fadeIn">
+  <div class="navigasi">
     <el-menu theme="light" class="el-menu-demo" mode="horizontal">
+    <router-link to="/"><el-menu-item index="1"><img src="https://cdn.sstatic.net/Sites/stackoverflow/company/img/logos/so/so-icon.png?v=c78bd457575a" alt="" class="logo-stack"></el-menu-item></router-link>
     <router-link to="/"><el-menu-item index="1">Home</el-menu-item></router-link>
     <router-link to="/questions"><el-menu-item index="2">Question</el-menu-item></router-link>
     <router-link to="/jobs"><el-menu-item index="2">Jobs</el-menu-item></router-link>
     <router-link to="/jobs"><el-menu-item index="2">Documentation</el-menu-item></router-link>
     <router-link to="/signup"><el-menu-item class="button" style="float: right;" index="4" v-if="statusLogin == false">Sign up</el-menu-item></router-link>
     <router-link to="/login"><el-menu-item  style="float: right;" index="3" v-if="statusLogin == false">Login</el-menu-item></router-link>
+    <router-link :to="'/user/'+ idUser"><el-menu-item style="float: right;" index="3" v-if="statusLogin == true">{{ cekUser }}</el-menu-item></router-link>
     <el-menu-item @click="logout()"  style="float: right;" index="3" v-if="statusLogin == true">Logout</el-menu-item>
   </el-menu>
   </div>
@@ -14,7 +16,7 @@
 
 <script>
 export default {
-  props: ['statusLogin'],
+  props: ['statusLogin', 'cekUser', 'idUser'],
   methods: {
     logout() {
       localStorage.clear()
@@ -26,4 +28,9 @@ export default {
 </script>
 
 <style lang="css">
+img.logo-stack {
+    width: 75px;
+    height: auto;
+    margin-top: -9px;
+}
 </style>

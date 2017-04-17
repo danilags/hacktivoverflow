@@ -6,7 +6,7 @@
         <h3>Top Questions</h3>
       </div>
     </el-col>
-    <el-col :span="12"><div class="grid-content bg-purple-dark">
+    <el-col :span="12"><div class="grid-content">
       <router-link to="/questions/ask"><el-button type="primary" v-if="statusLogin == true">Ask Question</el-button></router-link>
     </div>
   </el-col>

@@ -3,6 +3,7 @@ var router = express.Router();
 var contUser = require('../controllers/user');
 
 router.get('/', contUser.getAll)
+router.get('/:id', contUser.userFindOne)
 router.post('/', contUser.createUser)
 
 router.put('/question/:id', contUser.updateQuestion)

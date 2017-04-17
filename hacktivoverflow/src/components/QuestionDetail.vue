@@ -23,14 +23,14 @@
               <div class="grid-content bg-purple-light">
                 <p> {{ answer.content }} </p>
               </div>
-              <span>By User Id : {{ answer.userid }}</span>
+              <span class="penjawab">By: {{ answer.userid.username }}</span>
             </el-col>
           </el-row>
         </el-col>
       </el-row>
       <el-row >
         <el-col :span="10">
-          <el-form label-width="120px" class="demo-ruleForm">
+          <el-form label-width="120px" class="demo-ruleForm" v-if="statusLogin == true">
             <el-form-item label="" prop="content">
               <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 10}" auto-complete="off" v-model="newAnswer.content"></el-input>
             </el-form-item>
@@ -67,7 +67,7 @@ export default {
       let self = this
       axios.get(`http://localhost:3000/question/${this.id}`)
           .then(function(res) {
-            // console.log("Ini res ------- ", res.data.data.answerid[0].userid);
+            // console.log("Ini res ------- ", res.data);
             self.question = res.data.data.content
             self.user_penanya = res.data.data.userid.username
             res.data.data.answerid.forEach(function(jawaban) {
@@ -75,7 +75,7 @@ export default {
             })
             // console.log(jawabn.content);
             // self.answers = res.data.data.answerid[1].content
-            // console.log("ini questions ----",self.question);
+            // console.log("--- ----",self.answers);
           }).catch(function(err) {
             console.log(err);
           })

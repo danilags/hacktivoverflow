@@ -1,7 +1,9 @@
 <template lang="html">
   <div class="login">
     <el-row >
-      <h1>Login</h1>
+      <div class="logo">
+        <img src="https://www.stackoverflowbusiness.com/hubfs/B2B-SO/images/logo-so-PRINT-4.png?t=1492195043284" alt="">
+      </div>
       <div class="form">
         <el-form label-width="120px" class="demo-ruleForm">
           <el-form-item label="Username" prop="username">
@@ -40,6 +42,7 @@ export default {
         if (res.data.success) {
           window.localStorage.setItem('token', res.data.token)
           window.localStorage.setItem('user_id', res.data.id)
+          window.localStorage.setItem('username', res.data.username)
           window.location.reload()
           window.alert("Your Login success !");
           window.location.href = 'http://localhost:8080/';
@@ -65,4 +68,10 @@ export default {
 </script>
 
 <style lang="css">
+.logo img {
+    width: 30%;
+    margin-left: 100px;
+    margin-bottom: 23px;
+    margin-top: 21px;
+}
 </style>

@@ -6,6 +6,7 @@ import SignUp from '@/components/SignUp'
 import LogIn from '@/components/LogIn'
 import AskQuestion from '@/components/AskQuestion'
 import QuestionDetail from '@/components/QuestionDetail'
+import ProfilUser from '@/components/ProfilUser'
 
 Vue.use(Router)
 
@@ -31,6 +32,10 @@ export default new Router({
       path: '/questions/:id',
       component: QuestionDetail,
       props: true
+    },
+    {
+      path: '/user/:id',
+      component: ProfilUser
     }
   ]
 })

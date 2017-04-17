@@ -4,9 +4,19 @@ const answer = require('../models/answer');
 // const jwt = require('jsonwebtoken');
 
 let getAll = function(req, res) {
-  let populateQuery = [{path: 'userid', select:['username','email']}, {path: 'answerid', select: ['content','userid']}]
-  db.find({}).populate(populateQuery).exec(function(err, user){
+  let populateQuery = [
+    {
+      path: 'userid', select:['username','email']
+    },
+    {
+      path: 'answerid', populate: {path: 'userid', model: 'User', select: 'username' },
+      select: ['content','userid']
+    }]
+  db.find({})
+    .populate(populateQuery)
+    .exec(function(err, user){
     if (!err) {
+      console.log(user);
       res.send(user)
     }
   })
@@ -61,7 +71,14 @@ let deleteQuestion = function(req, res) {
 }
 
 let oneQuestion = function(req, res) {
-  let populateQuery = [{path: 'userid', select:['username','email']}, {path: 'answerid', select: ['content','userid']}, {path: 'answerid.userid', select: ['username']}]
+  let populateQuery = [
+    {
+      path: 'userid', select:['username','email']
+    },
+    {
+      path: 'answerid', populate: {path: 'userid', model: 'User', select: 'username' },
+      select: ['content','userid']
+    }]
   db.findOne({_id: req.params.id})
     .populate(populateQuery)
     .exec(function(err, result) {
